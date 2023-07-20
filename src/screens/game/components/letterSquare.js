@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
-import { StyleSheet, Text, Vibration,View } from 'react-native';
+import { StyleSheet, Text, Vibration, View } from "react-native";
 
-import { useAppSelector } from '../../../hooks/storeHooks';
-import { adjustLetterDisplay } from '../../../utils/adjustLetterDisplay';
-import { colors, SIZE } from '../../../utils/constants';
+import { useAppSelector } from "../../../hooks/storeHooks";
+import { adjustLetterDisplay } from "../../../utils/adjustLetterDisplay";
+import { colors, SIZE } from "../../../utils/constants";
 const LetterSquare = ({ guess, letter, idx }) => {
   const { currentGuessIndex, wrongGuessShake } = useAppSelector(
     (state) => state.gameState
@@ -12,35 +12,32 @@ const LetterSquare = ({ guess, letter, idx }) => {
   const matchStatus = guess.matches[idx];
 
   function matchColor() {
-    'worklet';
+    "worklet";
     switch (matchStatus) {
-      case 'correct':
+      case "correct":
         return colors.correct;
-      case 'present':
+      case "present":
         return colors.present;
-      case 'absent':
+      case "absent":
         return colors.absent;
-      case '':
+      case "":
         return colors.keyDefault;
       default:
         return colors.keyDefault;
     }
   }
 
-
   useEffect(() => {
-    if (letter !== '' && matchStatus === '') {
+    if (letter !== "" && matchStatus === "") {
       Vibration.vibrate(1);
     }
-    if (matchStatus !== '') {
-
+    if (matchStatus !== "") {
     }
   }, [letter, matchStatus]);
 
   useEffect(() => {
     if (wrongGuessShake && currentGuessIndex === guess.id) {
-      for (let i = 1; i < 6; i++) {
-      }
+      for (let i = 1; i < 6; i++) {}
     }
   }, [wrongGuessShake]);
 
@@ -71,16 +68,16 @@ export default LetterSquare;
 
 const styles = StyleSheet.create({
   square: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     width: SIZE / 6.5,
     height: SIZE / 6.5,
     borderRadius: 10,
   },
   letter: {
     fontSize: SIZE / 12,
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
+    fontWeight: "bold",
+    textTransform: "uppercase",
   },
 });

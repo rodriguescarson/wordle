@@ -1,8 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-import { useAppSelector, useAppDispatch } from '../../hooks/storeHooks';
+import { useAppSelector, useAppDispatch } from "../../hooks/storeHooks";
 import {
   setCurrentGuessIndex,
   setGameWon,
@@ -12,10 +12,10 @@ import {
   setGameEnded,
   setWrongGuessShake,
   setGameStarted,
-} from '../../store/slices/gameStateSlice';
-import { initialGuesses,  } from '../../utils/constants';
-import { answersEN, wordsEN } from '../../words';
-import GameBoard from './components/gameBoard';
+} from "../../store/slices/gameStateSlice";
+import { initialGuesses } from "../../utils/constants";
+import { answersEN, wordsEN } from "../../words";
+import GameBoard from "./components/gameBoard";
 
 const Game = () => {
   const {
@@ -46,10 +46,10 @@ const Game = () => {
         // @ts-ignore
         tempUsedKeys[letter] = guess.matches[idx];
       } else {
-        if (keyValue === 'correct') return;
-        else if (keyValue && guess.matches[idx] === 'correct') {
-          tempUsedKeys[letter] = 'correct';
-        } else if (keyValue === 'present' && guess.matches[idx] !== 'correct')
+        if (keyValue === "correct") return;
+        else if (keyValue && guess.matches[idx] === "correct") {
+          tempUsedKeys[letter] = "correct";
+        } else if (keyValue === "present" && guess.matches[idx] !== "correct")
           return;
         // eslint-disable-next-line
         // @ts-ignore
@@ -75,11 +75,11 @@ const Game = () => {
   const updateGuess = (keyPressed, currentGuess) => {
     const currentGuessLetters = [...currentGuess.letters];
     let nextEmptyIndex = currentGuessLetters.findIndex(
-      (letter) => letter === ''
+      (letter) => letter === ""
     );
     if (nextEmptyIndex === -1) nextEmptyIndex = 5;
     const lastNonEmptyIndex = nextEmptyIndex - 1;
-    if (keyPressed !== '<' && keyPressed !== 'Enter' && nextEmptyIndex < 5) {
+    if (keyPressed !== "<" && keyPressed !== "Enter" && nextEmptyIndex < 5) {
       currentGuessLetters[nextEmptyIndex] = keyPressed;
       const updatedGuess = { ...currentGuess, letters: currentGuessLetters };
       const updatedGuesses = guesses.map((guess, idx) => {
@@ -87,8 +87,8 @@ const Game = () => {
         else return guess;
       });
       dispatch(setGuesses([...updatedGuesses]));
-    } else if (keyPressed === '<') {
-      currentGuessLetters[lastNonEmptyIndex] = '';
+    } else if (keyPressed === "<") {
+      currentGuessLetters[lastNonEmptyIndex] = "";
       const updatedGuess = { ...currentGuess, letters: currentGuessLetters };
       const updatedGuesses = guesses.map((guess, idx) => {
         if (idx === currentGuessIndex) return updatedGuess;
@@ -99,16 +99,10 @@ const Game = () => {
   };
 
   const checkGuess = (currentGuess) => {
-    const currentGuessedWord = currentGuess.letters.join('');
+    const currentGuessedWord = currentGuess.letters.join("");
     if (currentGuessedWord.length === 5) {
       if (currentGuessedWord === solution) {
-        const matches = [
-          'correct',
-          'correct',
-          'correct',
-          'correct',
-          'correct',
-        ];
+        const matches = ["correct", "correct", "correct", "correct", "correct"];
         const updatedGuess = {
           ...currentGuess,
           matches,
@@ -127,31 +121,31 @@ const Game = () => {
         }, 250 * 6);
       } else if (wordList().includes(currentGuessedWord)) {
         const matches = [];
-        currentGuessedWord.split('').forEach((letter, index) => {
+        currentGuessedWord.split("").forEach((letter, index) => {
           const leftSlice = currentGuessedWord.slice(0, index + 1);
           const countInLeft = leftSlice
-            .split('')
+            .split("")
             .filter((item) => item === letter).length;
           const totalCount = solution
-            .split('')
+            .split("")
             .filter((item) => item === letter).length;
           const nonMatchingPairs = solution
-            .split('')
+            .split("")
             .filter((item, idx) => currentGuessedWord[idx] !== item);
 
           if (letter === solution[index]) {
-            matches.push('correct');
+            matches.push("correct");
           } else if (solution.includes(letter)) {
             if (
               countInLeft <= totalCount &&
               nonMatchingPairs.includes(letter)
             ) {
-              matches.push('present');
+              matches.push("present");
             } else {
-              matches.push('absent');
+              matches.push("absent");
             }
           } else {
-            matches.push('absent');
+            matches.push("absent");
           }
         });
 
@@ -183,9 +177,9 @@ const Game = () => {
     if (!gameEnded) {
       const currentGuess = guesses[currentGuessIndex];
       if (currentGuess) {
-        if (keyPressed !== 'Enter' && !currentGuess.isComplete) {
+        if (keyPressed !== "Enter" && !currentGuess.isComplete) {
           updateGuess(keyPressed, currentGuess);
-        } else if (keyPressed === 'Enter' && !gameWon) {
+        } else if (keyPressed === "Enter" && !gameWon) {
           checkGuess(currentGuess);
         }
       }
@@ -211,12 +205,34 @@ const Game = () => {
     return (
       <View style={styles.newGameScreen}>
         <TouchableOpacity onPress={resetGame}>
-          <Text style={{ color: 'white', fontSize: 20, backgroundColor: 'red', margin:10, padding:10 }}>Start a new game</Text>
+          <Text
+            style={{
+              color: "white",
+              fontSize: 20,
+              backgroundColor: "orange",
+              margin: 10,
+              padding: 18,
+              borderRadius: 10,
+            }}
+          >
+            Start a new game
+          </Text>
+          <Text
+            style={{
+              color: "black",
+              fontSize: 12,
+              margin: 10,
+              padding: 18,
+              borderRadius: 10,
+            }}
+          >
+            By Carson Rodrigues
+          </Text>
         </TouchableOpacity>
       </View>
     );
   return (
-    <View style={{ position: 'relative' }}>
+    <View style={{ position: "relative" }}>
       <GameBoard
         solution={solution}
         handleGuess={handleGuess}
@@ -224,14 +240,14 @@ const Game = () => {
       />
     </View>
   );
-}
+};
 
 export default Game;
 const styles = StyleSheet.create({
   newGameScreen: {
     flex: 1,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

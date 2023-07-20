@@ -1,10 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
-import { initialGuesses } from '../../utils/constants';
-
+import { initialGuesses } from "../../utils/constants";
 
 const initialState = {
-  solution: '',
+  solution: "",
   guesses: [...initialGuesses],
   currentGuessIndex: 0,
   usedKeys: {},
@@ -15,7 +14,7 @@ const initialState = {
 };
 
 export const gameStateSlice = createSlice({
-  name: 'gameState',
+  name: "gameState",
   initialState,
   reducers: {
     setSolution: (state, action) => {

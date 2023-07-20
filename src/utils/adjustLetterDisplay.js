@@ -1,14 +1,10 @@
-export const adjustLetterDisplay = (
-  letter,
-) => {
+export const adjustLetterDisplay = (letter) => {
   return letter;
 };
 
-export const adjustTextDisplay = (
-  text,
-) => {
+export const adjustTextDisplay = (text) => {
   return text
-    .split('')
+    .split("")
     .map((letter) => adjustLetterDisplay(letter))
-    .join('');
+    .join("");
 };
